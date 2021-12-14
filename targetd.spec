@@ -4,7 +4,7 @@ Summary:        Service to make storage remotely configurable
 
 # Version with a fourth component to handle VDO-team specific versioning based on where we started
 Version:        0.8.11.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 URL:            https://github.com/open-iscsi/targetd
 
 # Using an alternative source due to the fact that it has been modified and not submitted upstream yet.
@@ -21,6 +21,12 @@ targetd turns the machine into a remotely-configurable storage appliance.
 It supports an HTTP/jsonrpc-2.0 interface to let a remote
 administrator allocate volumes from an LVM volume group, and export
 those volumes over iSCSI.
+
+%package utils
+Summary: Utilities for managing targetd environment.
+
+%description utils
+User Utilies for targetd.
 
 %prep
 %setup -q
@@ -41,6 +47,22 @@ install -m 644 targetd.8 %{buildroot}%{_mandir}/man8/
 install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 %py3_install
 
+# This is not included via setup.py because there's not an easy way to install
+# the .py files without the .py extension.  Suggestions for improvement are
+# welcome!
+%{__install} -d %{_bindir}
+%{__install} -m 0755 utils/createLun.py             $RPM_BUILD_ROOT%{_bindir}/createLun
+%{__install} -m 0755 utils/destroyLun.py            $RPM_BUILD_ROOT%{_bindir}/destroyLun
+%{__install} -m 0755 utils/export_list.py           $RPM_BUILD_ROOT%{_bindir}/export_list
+%{__install} -m 0755 utils/filesys_create.py        $RPM_BUILD_ROOT%{_bindir}/filesys_create
+%{__install} -m 0755 utils/filesys_destroy.py       $RPM_BUILD_ROOT%{_bindir}/filesys_destroy
+%{__install} -m 0755 utils/filesys_export_add.py    $RPM_BUILD_ROOT%{_bindir}/filesys_export_add
+%{__install} -m 0755 utils/filesys_export_list.py   $RPM_BUILD_ROOT%{_bindir}/filesys_export_list
+%{__install} -m 0755 utils/filesys_export_remove.py $RPM_BUILD_ROOT%{_bindir}/filesys_export_remove
+%{__install} -m 0755 utils/filesys_list.py          $RPM_BUILD_ROOT%{_bindir}/filesys_list
+%{__install} -m 0755 utils/initiator_list.py        $RPM_BUILD_ROOT%{_bindir}/initiator_list
+%{__install} -m 0755 utils/pool_list.py             $RPM_BUILD_ROOT%{_bindir}/pool_list
+
 %post
 %systemd_post targetd.service
 
@@ -49,6 +71,19 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 
 %postun
 %systemd_postun_with_restart targetd.service
+
+%files utils
+%{_bindir}/createLun
+%{_bindir}/destroyLun
+%{_bindir}/export_list
+%{_bindir}/filesys_create
+%{_bindir}/filesys_destroy
+%{_bindir}/filesys_export_add
+%{_bindir}/filesys_export_list
+%{_bindir}/filesys_export_remove
+%{_bindir}/filesys_list
+%{_bindir}/initiator_list
+%{_bindir}/pool_list
 
 %files
 %{_bindir}/targetd
@@ -63,6 +98,9 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 %config(noreplace) %{_sysconfdir}/target/targetd.yaml
 
 %changelog
+* Tue Dec 14 2021 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-2
+- Added utility scripts to manage targetd environment.
+
 * Tue Dec 14 2021 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-1
 - Rebuilt for VDO
 

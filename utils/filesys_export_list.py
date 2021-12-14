@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # based on code from git://github.com/openstack/nova.git
 # nova/volume/nexenta/jsonrpc.py
