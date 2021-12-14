@@ -50,7 +50,6 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 # This is not included via setup.py because there's not an easy way to install
 # the .py files without the .py extension.  Suggestions for improvement are
 # welcome!
-%{__install} -d %{_bindir}
 %{__install} -m 0755 utils/createLun.py             $RPM_BUILD_ROOT%{_bindir}/createLun
 %{__install} -m 0755 utils/destroyLun.py            $RPM_BUILD_ROOT%{_bindir}/destroyLun
 %{__install} -m 0755 utils/export_list.py           $RPM_BUILD_ROOT%{_bindir}/export_list
