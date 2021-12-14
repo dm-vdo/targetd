@@ -4,7 +4,7 @@ Requires=target.service
 After=target.service
 
 [Service]
-ExecStart=/usr/local/bin/targetd
+ExecStart=/usr/bin/targetd
 
 [Install]
 WantedBy=multi-user.target
