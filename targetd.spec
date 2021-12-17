@@ -30,7 +30,7 @@ Summary: Utilities for managing targetd environment.
 User Utilies for targetd.
 
 %prep
-%setup -q -n %{base_name}-%{version}
+%setup -q -n %{name}-%{version}
 
 %build
 %py3_build
