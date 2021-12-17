@@ -9,7 +9,7 @@ Release:        3%{?dist}
 URL:            https://github.com/open-iscsi/targetd
 
 # Using an alternative source due to the fact that it has been modified and not submitted upstream yet.
-Source0:        https://gitlab.cee.redhat.com/vdo/open-sourcing/tools/third/targetd/-/archive/master/targetd-master.tar.gz
+Source0:        https://gitlab.cee.redhat.com/vdo/open-sourcing/tools/third/targetd/-/archive/%{version}/%{base_name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  python3-devel
