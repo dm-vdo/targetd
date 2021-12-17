@@ -1,10 +1,11 @@
-Name:           targetd
+%define base_name  targetd
+Name:           %{base_name}-bunsen
 License:        GPLv3
 Summary:        Service to make storage remotely configurable
 
 # Version with a fourth component to handle VDO-team specific versioning based on where we started
 Version:        0.8.11.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 URL:            https://github.com/open-iscsi/targetd
 
 # Using an alternative source due to the fact that it has been modified and not submitted upstream yet.
@@ -29,7 +30,7 @@ Summary: Utilities for managing targetd environment.
 User Utilies for targetd.
 
 %prep
-%setup -q
+%setup -q -n %{base_name}-%{version}
 
 %build
 %py3_build
@@ -97,6 +98,9 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 %config(noreplace) %{_sysconfdir}/target/targetd.yaml
 
 %changelog
+* Fri Dec 17 2021 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-3
+- Renamed to 'targetd-bunsen'
+
 * Tue Dec 14 2021 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-2
 - Added utility scripts to manage targetd environment.
 
