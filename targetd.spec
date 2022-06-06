@@ -30,7 +30,7 @@ Summary: Utilities for managing targetd environment.
 User Utilies for targetd.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{base_name}-%{version}
 
 %build
 %py3_build
@@ -98,6 +98,9 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 %config(noreplace) %{_sysconfdir}/target/targetd.yaml
 
 %changelog
+* Mon Jun 06 2022 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-4
+- Fixed source name
+
 * Fri Dec 17 2021 Andy Walsh <awalsh@redhat.com> - 0.8.11.1-3
 - Renamed to 'targetd-bunsen'
 
