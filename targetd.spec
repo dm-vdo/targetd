@@ -5,7 +5,7 @@ Summary:        Service to make storage remotely configurable
 
 # Version with a fourth component to handle VDO-team specific versioning based on where we started
 Version:        0.8.11.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 URL:            https://github.com/open-iscsi/targetd
 
 # Using an alternative source due to the fact that it has been modified and not submitted upstream yet.
@@ -32,8 +32,11 @@ User Utilies for targetd.
 %prep
 %setup -q -n %{base_name}-main
 
+%generate_buildrequires
+%pyproject_buildrequires
+
 %build
-%py3_build
+%pyproject_wheel
 
 %install
 mkdir -p %{buildroot}%{_mandir}/man8/
@@ -46,7 +49,7 @@ install -m 644 targetd.preset %{buildroot}%{_presetdir}/50-targetd.preset
 install -m 644 targetd.yaml %{buildroot}%{_sysconfdir}/target/targetd.yaml
 install -m 644 targetd.8 %{buildroot}%{_mandir}/man8/
 install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
-%py3_install
+%pyproject_install
 
 # This is not included via setup.py because there's not an easy way to install
 # the .py files without the .py extension.  Suggestions for improvement are
@@ -90,7 +93,7 @@ install -m 644 targetd.yaml.5 %{buildroot}%{_mandir}/man5/
 %{_unitdir}/targetd.service
 %{_presetdir}/50-targetd.preset
 %{python3_sitelib}/targetd/
-%{python3_sitelib}/*.egg-info
+%{python3_sitelib}/*.dist-info
 %license LICENSE
 %doc README.md API.md client
 %{_mandir}/man8/targetd.8*
